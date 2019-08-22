@@ -1,17 +1,43 @@
 import {elements} from './base';
 
 
+let ingredientList = '';
+
+const buildIngredientList = (ingredients) =>{
+  
+    ingredients.forEach (el => {
+        ingredientList = ingredientList + `
+        <li class="recipe__item">
+            <svg class="recipe__icon">
+                <use href="img/icons.svg#icon-check"></use>
+            </svg>
+            <div class="recipe__count">${el.count}</div>
+            <div class="recipe__ingredient">
+                <span class="recipe__unit">${el.unit}</span>
+                ${el.ingredient}
+            </div>
+        </li>
+        `;        
+    });  
+}
+
+
+
 // Recieve the select info and render recipe in the UI
 export const renderRecipe = (recipe) => {
     
+    // Build Ingredients List 
+    buildIngredientList (recipe.ingredients);
+
     // Render recipe
-    const markupRecipe= `
+    const markup= `
         <figure class="recipe__fig">
-            <img src="${recipe.img}" alt="${recipe.title}">
+            <img src="${recipe.img}" alt="${recipe.title}" class="recipe__img">
             <h1 class="recipe__title">
                 <span>${recipe.title}</span>
             </h1>
         </figure>
+
         <div class="recipe__details">
             <div class="recipe__info">
                 <svg class="recipe__info-icon">
@@ -45,18 +71,41 @@ export const renderRecipe = (recipe) => {
                 <svg class="header__likes">
                     <use href="img/icons.svg#icon-heart-outlined"></use>
                 </svg>
+            </button>           
+        </div>
+
+        <div class="recipe__ingredients">
+            <ul class="recipe__ingredient-list">
+                ${ingredientList}              
+            </ul>
+
+            <button class="btn-small recipe__btn">
+                <svg class="search__icon">
+                    <use href="img/icons.svg#icon-shopping-cart"></use>
+                </svg>
+                <span>Add to shopping list</span>
             </button>
         </div>
-    `
 
-    elements.recipeDetails.insertAdjacentHTML('afterbegin',markupRecipe);
-    
-    // Render ingredients
-    
-    const markupIngredients= `
-    
+            <div class="recipe__directions">
+                <h2 class="heading-2">How to cook it</h2>
+                <p class="recipe__directions-text">
+                    This recipe was carefully designed and tested by
+                    <span class="recipe__by">${recipe.autor}</span>. Please check out directions at their website.
+                </p>
+                <a class="btn-small recipe__btn" href="${recipe.url}" target="_blank">
+                    <span>Directions</span>
+                    <svg class="search__icon">
+                        <use href="img/icons.svg#icon-triangle-right"></use>
+                    </svg>
+
+                </a>
+            </div>                      
+
+        </div>
     `
-    
-    console.log(recipe);
-    console.log(recipe.ingredients);
+    elements.recipeDetails.insertAdjacentHTML('afterbegin',markup);
 }
+  
+
+export const clearRecipe = () => elements.recipeDetails.innerHTML = '';    

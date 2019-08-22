@@ -81,6 +81,7 @@ elements.searchResPages.addEventListener('click', e => {
         state.recipe = new Recipe (id);
 
         // 3) Prepare the UI for the recipe
+        recipeView.clearRecipe ();
 
 
 
@@ -96,6 +97,7 @@ elements.searchResPages.addEventListener('click', e => {
 
             // 6) Displaying recipe in the UI
             recipeView.renderRecipe (state.recipe);
+            
             
         } catch (error) {
             alert (`Error processing recipe: ${error}`)
