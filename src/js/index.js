@@ -77,13 +77,15 @@ elements.searchResPages.addEventListener('click', e => {
     const id = window.location.hash.replace('#','');
     
     if (id){
-        // 2) New recipe objetc and added to state
-        state.recipe = new Recipe (id);
-
-        // 3) Prepare the UI for the recipe
+        // 2) Prepare the UI for the recipe
         recipeView.clearRecipe ();
+        renderLoader(elements.recipeDetails);
 
+        // 3) Highligh the selected recipe
+        if (state.search) searchView.highlightSelected (id);
 
+        // 4) New recipe objetc and added to state
+        state.recipe = new Recipe (id);
 
 
         try {
@@ -96,6 +98,7 @@ elements.searchResPages.addEventListener('click', e => {
             state.recipe.calcServings();
 
             // 6) Displaying recipe in the UI
+            clearLoader();
             recipeView.renderRecipe (state.recipe);
             
             

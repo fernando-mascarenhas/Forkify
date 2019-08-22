@@ -13,6 +13,23 @@ export const clearResults = () =>{
     elements.searchResPages.innerHTML = '';      
 }
 
+export const highlightSelected = id => {
+    // Since the elements aren´t there when we open the page, we can´t have this query in the base.js file
+    
+    // Remove the highlight from all elements
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    
+    resultsArr.forEach(el =>{
+        el.classList.remove('results__link--active');
+    })
+    
+    // Add to the selected
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+
+    // We could and the .results__link and results__link--active to the base.js elementsStrings. If we do that we would have to chance the list creator to call this variable aswell.
+
+}
+
 
 const limitRecipeTittle = (title, limit = 17) => {
     const newTitle = [];

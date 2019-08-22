@@ -1,7 +1,28 @@
 import {elements} from './base';
+// Fraction is the name exported in the module
+import {Fraction} from 'fractional';
 
+const formatCount = count => {
+    if (count) {
+        // destructuring the number in an array with 2 strings -> interger and decimal parts
+        // Then map will creat a new array using ParseInt to turn them to number again
+        const [int, dec] = count.toString().split('.').map(el => parseInt (el, 10));
 
-let ingredientList = '';
+        if (!dec) return count;
+
+        if (int === 0 ) {
+            const fr = new Fraction (count);
+
+            return `${fr.numerator}/${fr.denominator}`;
+        } else {
+            const fr = new Fraction (count - int);
+            return `${int} ${fr.numerator}/${fr.denominator}`;
+        }
+                        
+    }
+    return '?';    
+};
+
 
 // On the renderRecipe function we use map in the ingredients array to create a new array using the information to create strings containing the HTML code for the list item.
 // Them we join the array of strings create using map using the method array.join().
@@ -10,7 +31,7 @@ const createIngredient = ingredients => `
             <svg class="recipe__icon">
                 <use href="img/icons.svg#icon-check"></use>
             </svg>
-            <div class="recipe__count">${ingredients.count}</div>
+            <div class="recipe__count">${formatCount(ingredients.count)}</div>
             <div class="recipe__ingredient">
                 <span class="recipe__unit">${ingredients.unit}</span>
                 ${ingredients.ingredient}
@@ -101,4 +122,6 @@ export const renderRecipe = recipe => {
 }
   
 
-export const clearRecipe = () => elements.recipeDetails.innerHTML = '';    
+export const clearRecipe = () => {
+    elements.recipeDetails.innerHTML = ''
+};    

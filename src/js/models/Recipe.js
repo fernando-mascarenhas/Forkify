@@ -23,19 +23,19 @@ export default class Recipe {
         
         try{
             // real search            
-            // const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
-            // this.title = res.data.recipe.title;
-            // this.autor = res.data.recipe.publisher;
-            // this.img = res.data.recipe.image_url;
-            // this.url = res.data.recipe.source_url;
-            // this.ingredients = res.data.recipe.ingredients;
+            const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
+            this.title = res.data.recipe.title;
+            this.autor = res.data.recipe.publisher;
+            this.img = res.data.recipe.image_url;
+            this.url = res.data.recipe.source_url;
+            this.ingredients = res.data.recipe.ingredients;
             
             //test search
-            this.title = testRecipe.title;
-            this.autor = testRecipe.publisher;
-            this.img = testRecipe.image_url;
-            this.url = testRecipe.source_url;
-            this.ingredients = testRecipe.ingredients;            
+            // this.title = testRecipe.title;
+            // this.autor = testRecipe.publisher;
+            // this.img = testRecipe.image_url;
+            // this.url = testRecipe.source_url;
+            // this.ingredients = testRecipe.ingredients;            
 
         } catch(error) {
             alert(`Error getting recipe from server: ${error}`);
@@ -58,6 +58,8 @@ export default class Recipe {
     parseIngredients (){
         const unitsLong = ['tablespoons', 'tablespoon', 'tbsps', 'ounces', 'ounce', 'ozs','teaspoons', 'teaspoon', 'tsps', 'cups', 'pounds'];
         const unitsShort = ['tbsp', 'tbsp', 'tbsp', 'oz', 'oz', 'oz', 'tsp', 'tsp', 'tsp', 'cup', 'pound']
+        // Adding the possibilite of SI units. The destructuring will pass the elements from the array unitsShort as individual elements and we will add the SI elements
+        const units = [...unitsShort, 'kg', 'g', 'l', 'ml']
 
 
         const newIngredients = this.ingredients.map(el => {
@@ -72,8 +74,8 @@ export default class Recipe {
 
             // 3) Parse ingredients into [count, unit and ingredient]
             const arrIng = ingredient.split(' ');
-            // This will loop trought the arrIng (.findIndex) and will text if the current element (el2) is present in the unitsShort array (.includes)
-            const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2))
+            // This will loop trought the arrIng (.findIndex) and will text if the current element (el2) is present in the units array (.includes)
+            const unitIndex = arrIng.findIndex(el2 => units.includes(el2))
                        
 
             let objIngredient;
