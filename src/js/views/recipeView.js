@@ -3,32 +3,25 @@ import {elements} from './base';
 
 let ingredientList = '';
 
-const buildIngredientList = (ingredients) =>{
-  
-    ingredients.forEach (el => {
-        ingredientList = ingredientList + `
+// On the renderRecipe function we use map in the ingredients array to create a new array using the information to create strings containing the HTML code for the list item.
+// Them we join the array of strings create using map using the method array.join().
+const createIngredient = ingredients => `
         <li class="recipe__item">
             <svg class="recipe__icon">
                 <use href="img/icons.svg#icon-check"></use>
             </svg>
-            <div class="recipe__count">${el.count}</div>
+            <div class="recipe__count">${ingredients.count}</div>
             <div class="recipe__ingredient">
-                <span class="recipe__unit">${el.unit}</span>
-                ${el.ingredient}
+                <span class="recipe__unit">${ingredients.unit}</span>
+                ${ingredients.ingredient}
             </div>
         </li>
         `;        
-    });  
-}
-
-
+  
 
 // Recieve the select info and render recipe in the UI
-export const renderRecipe = (recipe) => {
-    
-    // Build Ingredients List 
-    buildIngredientList (recipe.ingredients);
-
+export const renderRecipe = recipe => {
+      
     // Render recipe
     const markup= `
         <figure class="recipe__fig">
@@ -75,8 +68,8 @@ export const renderRecipe = (recipe) => {
         </div>
 
         <div class="recipe__ingredients">
-            <ul class="recipe__ingredient-list">
-                ${ingredientList}              
+            <ul class="recipe__ingredient-list">                
+                ${recipe.ingredients.map(el => createIngredient(el)).join('')}
             </ul>
 
             <button class="btn-small recipe__btn">
