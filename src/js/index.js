@@ -2,6 +2,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import * as searchView from './views/searchView'; // will return a object named searchView with all functions
+import * as recipeView from './views/recipeView';
 import {elements, renderLoader, clearLoader} from './views/base';
 
 /** Global state of the app
@@ -80,19 +81,21 @@ elements.searchResPages.addEventListener('click', e => {
         state.recipe = new Recipe (id);
 
         // 3) Prepare the UI for the recipe
+
+
+
+
         try {
             // 4) Search for the recipe
             await state.recipe.getRecipe();
-            state.recipe.parseIngredients()
+            state.recipe.parseIngredients();
                     
             // 5) Calculate Time and Servings
             state.recipe.calcTime();
             state.recipe.calcServings();
 
             // 6) Displaying recipe in the UI
-            
-            console.log(state.recipe);
-            console.log(state.recipe.ingredients);
+            recipeView.renderRecipe (state.recipe);
             
         } catch (error) {
             alert (`Error processing recipe: ${error}`)

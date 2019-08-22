@@ -1,6 +1,6 @@
-import {elements, elementsStrings} from './base';
+import {elements} from './base';
 
-export const getInput = () => elements.searchInput.value; // return
+export const getInput = () => elements.searchInput.value;
 
 export const clearInput = () => {
     elements.searchInput.value = ''; // The sintax avoid the confusion that there is a return as if we were to type like the get Input function
