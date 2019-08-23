@@ -81,7 +81,7 @@ elements.searchResPages.addEventListener('click', e => {
     if (id){
         // 2) Prepare the UI for the recipe
         recipeView.clearRecipe ();
-        renderLoader(elements.recipeDetails);
+        renderLoader(elements.recipe);
 
         // 3) Highligh the selected recipe
         if (state.search) searchView.highlightSelected (id);
@@ -119,25 +119,54 @@ elements.searchResPages.addEventListener('click', e => {
 ['hashchange','load']. forEach ( event => window.addEventListener(event, controlRecipe))
 
 
-// Handling recipe button click to update servings
+/** 
+ * SHOPPING LIST CONTROLER 
+ */    
+
+
+const controlList = () => {
+
+    // Create a new list
+    if (!state.list) state.list = new List ();
+
+    // Add each ingredients to the list
+    state.recipe.ingredients.forEach (el => {
+        const item = state.list.addItem(el.count, el.unit, el.ingredient)
+        listView.renderItem (item);
+    });
+
+    console.log(state.list)
+}
+
+elements.shoppingList.addEventListener('click', e => {
+    // e.target returns the element that was clicked    
+    const btn = e.target.closest('.btn-tiny').parentElement;
+    console.log(btn)
+    if (btn){
+        const itemID = btn.parentElement.dataset.itemid;
+        console.log(itemID);       
+    }        
+    
+})
+
+// Handling recipe button click to update servings, add to shopping list and liking
 // Add event listener for page navigation using event delegation -> 'e' refers to the event
-elements.recipeDetails.addEventListener('click', e => {
+elements.recipe.addEventListener('click', e => {
     
-    // e.target returns the element that was clicked
-    
+    // e.target returns the element that was clicked    
     if (e.target.matches('.btn-dec, .btn-dec *') && state.recipe.servings > 1){
         state.recipe.updateServings ('dec');
         recipeView.updateServingsIngredients (state.recipe);
     } else if (e.target.matches('.btn-inc, .btn-inc *')){
         state.recipe.updateServings ('inc');
         recipeView.updateServingsIngredients (state.recipe);
-    }; 
-        
+    } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
+        controlList();        
+    }               
     
 })
 
-/** 
- * RECIPE CONTROLER 
- */
 
-window.l = new List ();
+
+
+

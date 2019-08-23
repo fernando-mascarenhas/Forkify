@@ -3,7 +3,7 @@ import {elements} from './base';
 // Fraction is the name exported in the module
 import {Fraction} from 'fractional';
 
-const formatCount = count => {
+export const formatCount = count => {
     if (count) {
         // destructuring the number in an array with 2 strings -> interger and decimal parts
         // Then map will creat a new array using ParseInt to turn them to number again
@@ -93,7 +93,7 @@ export const renderRecipe = recipe => {
                 ${recipe.ingredients.map(el => createIngredient(el)).join('')}
             </ul>
 
-            <button class="btn-small recipe__btn">
+            <button class="btn-small recipe__btn recipe__btn--add">
                 <svg class="search__icon">
                     <use href="img/icons.svg#icon-shopping-cart"></use>
                 </svg>
@@ -118,12 +118,12 @@ export const renderRecipe = recipe => {
 
         </div>
     `
-    elements.recipeDetails.insertAdjacentHTML('afterbegin',markup);
+    elements.recipe.insertAdjacentHTML('afterbegin',markup);
 }
   
 
 export const clearRecipe = () => {
-    elements.recipeDetails.innerHTML = ''
+    elements.recipe.innerHTML = ''
 };    
 
 
