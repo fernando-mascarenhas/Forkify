@@ -137,17 +137,23 @@ const controlList = () => {
     
 }
 
+// Handling delete and quantity change for the item
 elements.shoppingList.addEventListener('click', e => {
     // e.target returns the element that was clicked    
-    const btn = e.target.closest('.btn-tiny');    
-    if (btn){
-        const itemID = btn.parentElement.dataset.itemid;
-        state.list.deleteItem (itemID);
-        listView.deleteItem (itemID);       
-               
-    }        
+    const id = e.target.closest('.shopping__item').dataset.itemid;      
     
-})
+    // handle delete event
+    if (e.target.matches('.shopping__delete, .shopping__delete *')){
+        // Delete from state       
+        state.list.deleteItem (id);
+        // Delele from UI
+        listView.deleteItem (id);
+    //handle update value
+    } else if (e.target.matches('.shopping__count-value'))  {               
+        const updatedCount = parseFloat(e.target.value);       
+        state.list.updateCount (id, updatedCount);        
+    }   
+});
 
 // Handling recipe button click to update servings, add to shopping list and liking
 // Add event listener for page navigation using event delegation -> 'e' refers to the event
