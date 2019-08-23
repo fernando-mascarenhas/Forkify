@@ -68,12 +68,12 @@ export const renderRecipe = recipe => {
                 <span class="recipe__info-text"> servings</span>
 
                 <div class="recipe__info-buttons">
-                    <button class="btn-tiny">
+                    <button class="btn-tiny btn-dec">
                         <svg>
                             <use href="img/icons.svg#icon-circle-with-minus"></use>
                         </svg>
                     </button>
-                    <button class="btn-tiny">
+                    <button class="btn-tiny btn-inc">
                         <svg>
                             <use href="img/icons.svg#icon-circle-with-plus"></use>
                         </svg>
@@ -125,3 +125,17 @@ export const renderRecipe = recipe => {
 export const clearRecipe = () => {
     elements.recipeDetails.innerHTML = ''
 };    
+
+
+export const updateServingsIngredients = recipe => {
+    // update the servings
+    // this querySelector can´t be add in base.js because it is created after loading
+    document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+    // update the ingredientes
+    const countElements = Array.from(document.querySelectorAll('.recipe__count'));
+    countElements.forEach ((el, i) => {
+        el.textContent = formatCount(recipe.ingredients[i].count);
+    });
+};
+

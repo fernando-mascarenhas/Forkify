@@ -23,19 +23,19 @@ export default class Recipe {
         
         try{
             // real search            
-            const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
-            this.title = res.data.recipe.title;
-            this.autor = res.data.recipe.publisher;
-            this.img = res.data.recipe.image_url;
-            this.url = res.data.recipe.source_url;
-            this.ingredients = res.data.recipe.ingredients;
+            // const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
+            // this.title = res.data.recipe.title;
+            // this.autor = res.data.recipe.publisher;
+            // this.img = res.data.recipe.image_url;
+            // this.url = res.data.recipe.source_url;
+            // this.ingredients = res.data.recipe.ingredients;
             
             //test search
-            // this.title = testRecipe.title;
-            // this.autor = testRecipe.publisher;
-            // this.img = testRecipe.image_url;
-            // this.url = testRecipe.source_url;
-            // this.ingredients = testRecipe.ingredients;            
+            this.title = testRecipe.title;
+            this.autor = testRecipe.publisher;
+            this.img = testRecipe.image_url;
+            this.url = testRecipe.source_url;
+            this.ingredients = testRecipe.ingredients;            
 
         } catch(error) {
             alert(`Error getting recipe from server: ${error}`);
@@ -127,4 +127,16 @@ export default class Recipe {
         this.ingredients = newIngredients;
     }
 
+    updateServings (type) {
+        // Servings        
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1
+        
+        // Ingredients
+        this.ingredients.forEach ((ing) => {
+            ing.count *= (newServings / this.servings);
+        });
+
+        this.servings =  newServings
+    }
 }
+

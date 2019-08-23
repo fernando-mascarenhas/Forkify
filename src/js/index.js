@@ -115,3 +115,23 @@ elements.searchResPages.addEventListener('click', e => {
 // Event listerner when the page loads. In case the user saved an bookmark for example
 // Creating an array of possible events that will execute the same functions
 ['hashchange','load']. forEach ( event => window.addEventListener(event, controlRecipe))
+
+
+// Handling recipe button click to update servings
+// Add event listener for page navigation using event delegation -> 'e' refers to the event
+elements.recipeDetails.addEventListener('click', e => {
+    
+    // e.target returns the element that was clicked
+    
+    if (e.target.matches('.btn-dec, .btn-dec *') && state.recipe.servings > 1){
+        state.recipe.updateServings ('dec');
+        recipeView.updateServingsIngredients (state.recipe);
+    } else if (e.target.matches('.btn-inc, .btn-inc *')){
+        state.recipe.updateServings ('inc');
+        recipeView.updateServingsIngredients (state.recipe);
+    }; 
+    
+    
+    
+})
+
