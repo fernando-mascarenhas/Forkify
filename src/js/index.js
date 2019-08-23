@@ -129,22 +129,22 @@ const controlList = () => {
     // Create a new list
     if (!state.list) state.list = new List ();
 
-    // Add each ingredients to the list
+    // Add each ingredients to the list and UI
     state.recipe.ingredients.forEach (el => {
         const item = state.list.addItem(el.count, el.unit, el.ingredient)
         listView.renderItem (item);
     });
-
-    console.log(state.list)
+    
 }
 
 elements.shoppingList.addEventListener('click', e => {
     // e.target returns the element that was clicked    
-    const btn = e.target.closest('.btn-tiny').parentElement;
-    console.log(btn)
+    const btn = e.target.closest('.btn-tiny');    
     if (btn){
         const itemID = btn.parentElement.dataset.itemid;
-        console.log(itemID);       
+        state.list.deleteItem (itemID);
+        listView.deleteItem (itemID);       
+               
     }        
     
 })
