@@ -1,4 +1,5 @@
 import {elements} from './base';
+
 // Fraction is the name exported in the module
 import {Fraction} from 'fractional';
 
@@ -17,8 +18,7 @@ const formatCount = count => {
         } else {
             const fr = new Fraction (count - int);
             return `${int} ${fr.numerator}/${fr.denominator}`;
-        }
-                        
+        }                        
     }
     return '?';    
 };

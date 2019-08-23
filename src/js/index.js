@@ -1,8 +1,10 @@
 // Global app controller
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import List from './models/List';
 import * as searchView from './views/searchView'; // will return a object named searchView with all functions
 import * as recipeView from './views/recipeView';
+import * as listView from './views/listView';
 import {elements, renderLoader, clearLoader} from './views/base';
 
 /** Global state of the app
@@ -130,8 +132,12 @@ elements.recipeDetails.addEventListener('click', e => {
         state.recipe.updateServings ('inc');
         recipeView.updateServingsIngredients (state.recipe);
     }; 
-    
-    
+        
     
 })
 
+/** 
+ * RECIPE CONTROLER 
+ */
+
+window.l = new List ();
