@@ -25,14 +25,14 @@ export default class Recipe {
             // real search            
             // const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
             // this.title = res.data.recipe.title;
-            // this.autor = res.data.recipe.publisher;
+            // this.author = res.data.recipe.publisher;
             // this.img = res.data.recipe.image_url;
             // this.url = res.data.recipe.source_url;
             // this.ingredients = res.data.recipe.ingredients;
             
             //test search
             this.title = testRecipe.title;
-            this.autor = testRecipe.publisher;
+            this.author = testRecipe.publisher;
             this.img = testRecipe.image_url;
             this.url = testRecipe.source_url;
             this.ingredients = testRecipe.ingredients;            

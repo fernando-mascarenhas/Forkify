@@ -2,9 +2,11 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Likes from './models/Likes'
 import * as searchView from './views/searchView'; // will return a object named searchView with all functions
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likesView from './views/likesView';
 import {elements, renderLoader, clearLoader} from './views/base';
 
 /** Global state of the app
@@ -16,6 +18,13 @@ import {elements, renderLoader, clearLoader} from './views/base';
 const state = {
     
 };
+
+// Check if there are any likes and act accordinly
+if (state.likes){
+    likesView.toggleLikeMenu (state.likes.getNumLikes())
+} else {
+    likesView.toggleLikeMenu (0);
+}
 
 /** 
  * SEARCH CONTROLER 
@@ -102,7 +111,10 @@ elements.searchResPages.addEventListener('click', e => {
             // 6) Displaying recipe in the UI
             clearLoader();
             recipeView.renderRecipe (state.recipe);
-            
+
+            // 7) If there is a liked list            
+            if (state.likes) likesView.toggleLikeBtn (state.likes.isLiked(id));
+                        
             
         } catch (error) {
             alert (`Error processing recipe: ${error}`)
@@ -137,6 +149,50 @@ const controlList = () => {
     
 }
 
+
+/** 
+ * Likes CONTROLER 
+ */  
+
+const controlLikes = () => {
+
+    // 1 - Create a new Likes array if there is none
+    if (!state.likes) state.likes = new Likes ();
+
+    // 2) Get the recipe ID from the window #
+        // window.location is the entire url -> followed .hash we get just the hash
+        // Then we replace the # symbol in the string with '' (nothing)
+    const currentID = state.recipe.id;    
+        
+
+    // 3 - Check if the recipe is liked
+    if (state.likes.isLiked(currentID)){
+        // 4 - If so unlikes recipe
+        state.likes.deleteLike (currentID);
+
+        // 4.1 - Toggle off the like icon
+        likesView.toggleLikeBtn(false);
+
+        // 4.2 - Remove recipe from the liked list in the UI
+
+    } else {
+        // 5 - If not, likes recipes
+        state.likes.addLike (currentID, state.recipe.title, state.recipe.author, state.recipe.img);
+
+        // 5.1 - Toggle on the like icon
+        likesView.toggleLikeBtn(true);
+
+        // 5.2 - Add recipe to the liked list in the UI     
+
+    
+    }
+    console.log(state.likes);    
+    likesView.toggleLikeMenu (state.likes.getNumLikes());    
+}
+
+
+
+
 // Handling delete and quantity change for the item
 elements.shoppingList.addEventListener('click', e => {
     // e.target returns the element that was clicked    
@@ -168,40 +224,12 @@ elements.recipe.addEventListener('click', e => {
         recipeView.updateServingsIngredients (state.recipe);
     } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
         controlList();        
+    } else if (e.target.matches(".recipe__love, .recipe__love *")) {             
+        controlLikes();
     }               
     
 })
 
 
-/** 
- * Likes CONTROLER 
- */  
 
 
-// Handling the like button click
-elements.recipe.addEventListener('click', e => {
-    // e.target returns the element that was clicked    
-    const btnLike = e.target.closest(".recipe__love");     
-        
-    if (btnLike){
-        // 1) Get the recipe ID from the window #
-        // window.location is the entire url -> followed .hash we get just the hash
-        // Then we replace the # symbol in the string with '' (nothing)
-        const id = window.location.hash.replace('#','');
-        console.log(id);
-        
-
-            // 2 - Check if the recipe is liked
-        
-            // 3 - If not likes recipes
-
-            // 4 - If so unlikes recipe
-
-    }
-    
-    
-    
-    
-    
-   
-});
