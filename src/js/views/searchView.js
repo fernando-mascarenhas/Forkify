@@ -24,14 +24,16 @@ export const highlightSelected = id => {
     })
     
     // Add to the selected
-    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+    if (document.querySelector(`.results__link[href="#${id}"]`)){
+        document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
+    }
 
     // We could and the .results__link and results__link--active to the base.js elementsStrings. If we do that we would have to chance the list creator to call this variable aswell.
 
 }
 
 
-const limitRecipeTittle = (title, limit = 17) => {
+export const limitRecipeTittle = (title, limit = 17) => {
     const newTitle = [];
 
     if (title.length > limit){

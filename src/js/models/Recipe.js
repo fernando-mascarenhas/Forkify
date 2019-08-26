@@ -23,19 +23,19 @@ export default class Recipe {
         
         try{
             // real search            
-            // const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
-            // this.title = res.data.recipe.title;
-            // this.author = res.data.recipe.publisher;
-            // this.img = res.data.recipe.image_url;
-            // this.url = res.data.recipe.source_url;
-            // this.ingredients = res.data.recipe.ingredients;
+            const res = await axios (`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
+            this.title = res.data.recipe.title;
+            this.author = res.data.recipe.publisher;
+            this.img = res.data.recipe.image_url;
+            this.url = res.data.recipe.source_url;
+            this.ingredients = res.data.recipe.ingredients;
             
             //test search
-            this.title = testRecipe.title;
-            this.author = testRecipe.publisher;
-            this.img = testRecipe.image_url;
-            this.url = testRecipe.source_url;
-            this.ingredients = testRecipe.ingredients;            
+            // this.title = testRecipe.title;
+            // this.author = testRecipe.publisher;
+            // this.img = testRecipe.image_url;
+            // this.url = testRecipe.source_url;
+            // this.ingredients = testRecipe.ingredients;            
 
         } catch(error) {
             alert(`Error getting recipe from server: ${error}`);

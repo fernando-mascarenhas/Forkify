@@ -244,11 +244,11 @@ export default class Search{
         
         try {
             //real result
-            // const res = await axios(`${proxy}https://www.food2fork.com/api/search?key=${key}&q=${this.query}`);            
-            // this.result = res.data.recipes;
+            const res = await axios(`${proxy}https://www.food2fork.com/api/search?key=${key}&q=${this.query}`);            
+            this.result = res.data.recipes;
 
             // Makeshift result because of the daily limit
-            this.result = testArray;                  
+            // this.result = testArray;                  
             
         } catch(error) {
             alert(error);

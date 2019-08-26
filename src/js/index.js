@@ -19,7 +19,7 @@ const state = {
     
 };
 
-// Check if there are any likes and act accordinly
+// Check if there is a posibility of any likes and act accordinly
 if (state.likes){
     likesView.toggleLikeMenu (state.likes.getNumLikes())
 } else {
@@ -46,7 +46,6 @@ const controlSearch = async () =>{
             // 4) Search for recipes
             await state.search.getResults();
             
-
             // 5) Surrender results in the UI
             clearLoader();
             searchView.renderResults (state.search.result);
@@ -174,19 +173,21 @@ const controlLikes = () => {
         likesView.toggleLikeBtn(false);
 
         // 4.2 - Remove recipe from the liked list in the UI
+        likesView.deleteLikedItem (currentID);
 
     } else {
         // 5 - If not, likes recipes
-        state.likes.addLike (currentID, state.recipe.title, state.recipe.author, state.recipe.img);
-
+        const newLike = state.likes.addLike (currentID, state.recipe.title, state.recipe.author, state.recipe.img);
+        
         // 5.1 - Toggle on the like icon
         likesView.toggleLikeBtn(true);
 
-        // 5.2 - Add recipe to the liked list in the UI     
+        // 5.2 - Add recipe to the liked list in the UI   
+        likesView.renderLikedItem (newLike);  
 
     
     }
-    console.log(state.likes);    
+     
     likesView.toggleLikeMenu (state.likes.getNumLikes());    
 }
 
