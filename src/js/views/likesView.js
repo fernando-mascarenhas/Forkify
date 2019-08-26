@@ -1,5 +1,5 @@
 import {elements} from './base';
-import * as searchView from './searchView';
+import {limitRecipeTittle} from './searchView';
 
 
 
@@ -21,7 +21,7 @@ export const renderLikedItem = like => {
                 <img src="${like.img}" alt="${like.title}">
             </figure>
             <div class="likes__data">
-                <h4 class="likes__name">${searchView.limitRecipeTittle(like.title)}</h4>
+                <h4 class="likes__name">${limitRecipeTittle(like.title)}</h4>
                 <p class="likes__author">${like.author}</p>
             </div>
         </a>
