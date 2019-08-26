@@ -173,6 +173,35 @@ elements.recipe.addEventListener('click', e => {
 })
 
 
+/** 
+ * Likes CONTROLER 
+ */  
 
 
+// Handling the like button click
+elements.recipe.addEventListener('click', e => {
+    // e.target returns the element that was clicked    
+    const btnLike = e.target.closest(".recipe__love");     
+        
+    if (btnLike){
+        // 1) Get the recipe ID from the window #
+        // window.location is the entire url -> followed .hash we get just the hash
+        // Then we replace the # symbol in the string with '' (nothing)
+        const id = window.location.hash.replace('#','');
+        console.log(id);
+        
 
+            // 2 - Check if the recipe is liked
+        
+            // 3 - If not likes recipes
+
+            // 4 - If so unlikes recipe
+
+    }
+    
+    
+    
+    
+    
+   
+});
