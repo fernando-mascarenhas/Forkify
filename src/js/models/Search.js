@@ -252,6 +252,7 @@ export default class Search{
             
         } catch(error) {
             alert(error);
+            console.log(erro);
         }        
     }
     

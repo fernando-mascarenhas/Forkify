@@ -39,6 +39,7 @@ export default class Recipe {
 
         } catch(error) {
             alert(`Error getting recipe from server: ${error}`);
+            console.log(error);
         }
         
     }

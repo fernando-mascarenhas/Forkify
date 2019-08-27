@@ -19,12 +19,13 @@ const state = {
     
 };
 
-// Check if there is a posibility of any likes and act accordinly
-if (state.likes){
-    likesView.toggleLikeMenu (state.likes.getNumLikes())
-} else {
-    likesView.toggleLikeMenu (0);
-}
+// Upon starting te code create the like key pair to check the memory for likes
+state.likes = new Likes ();
+state.likes.readStorage();
+likesView.toggleLikeMenu (state.likes.getNumLikes());
+// state.likes.like.forEach (el => likesView.renderLikedItem (el));
+state.likes.likes.forEach (el => likesView.renderLikedItem(el));
+
 
 /** 
  * SEARCH CONTROLER 
@@ -52,6 +53,7 @@ const controlSearch = async () =>{
 
         } catch (error){
             alert (`Error getting the search results: ${error}`)
+            console.log(error);
         }
                 
     }
@@ -127,7 +129,8 @@ elements.searchResPages.addEventListener('click', e => {
 // Event listener that verify is the hash # in the url has changed. 
 // Event listerner when the page loads. In case the user saved an bookmark for example
 // Creating an array of possible events that will execute the same functions
-['hashchange','load']. forEach ( event => window.addEventListener(event, controlRecipe))
+['hashchange','load'].forEach ( event => window.addEventListener(event, controlRecipe))
+
 
 
 /** 
@@ -156,7 +159,8 @@ const controlList = () => {
 const controlLikes = () => {
 
     // 1 - Create a new Likes array if there is none
-    if (!state.likes) state.likes = new Likes ();
+    // if (!state.likes) state.likes = new Likes ();
+    // No need for this once we stated that this key pair will always be created on load.
 
     // 2) Get the recipe ID from the window #
         // window.location is the entire url -> followed .hash we get just the hash
